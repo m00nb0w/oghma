@@ -138,34 +138,21 @@ let response = {
         "date": "2021-10-08T07:00:00"
     }
 
-// let handle = x => {
-//   var t = Object.assign(x)
+let handleAuctionProduct = (product, extraFields) => {
+  return {...product, ...extraFields}
+}
 
-//   t.auctionSlots.map(slot => )
-// }
+let handleAuctionSlot = (slot, extraFields) => {
+  return {...slot, ...extraFields, auctionProduct: handleAuctionProduct(slot.auctionProduct, {"id": slot.id, "bidIncrease": slot.bidIncrease, "currencyCode": slot.currencyCode})}
+}
 
-// let handleAuctionProduct = (product, extraFields) => {
-//   return {...product, ...extraFields}
-// }
+let handle = response => {
+  return {
+    ...response,
+    auctionSlots: response.auctionSlots.map(slot => handleAuctionSlot(slot, {permittedBuyers: response.permittedBuyers, permittedCountries: response.permittedCountries, auctionType: response.auctionType}))
+  }
+}
 
-// let handleAuctionSlot = (slot, extraFields) => {
-//   return {...slot, ...extraFields, auctionProducts: slot.auctionProducts.map(product => handleAuctionProduct(product, {"id": slot.id, "bidIncrease": slot.bidIncrease, "currencyCode": slot.currencyCode}))}
-// }
-
-// // console.log(response.auctionSlots)
-
-// response.auctionSlots.map(slot => 
-//   {
-//     console.log("222")
-//     let t = handleAuctionProduct(slot.auctionProduct, {"id": slot.id, "bidIncrease": slot.bidIncrease, "currencyCode": slot.currencyCode})
-//     console.log(t)
-//   })
-
-let append = (current, extra) => {return {...current, ...extra}}
-
-// let handle = response => {
-//   return {...response, auncti
-// }
-console.log(append({id: "123", id2: "123"}, {id2: "1234"}))
-
-console.log(response.auctionSlots.map(slot => {id:"123"})))
+let t = handle(response)
+console.log(t)
+console.log(t.auctionSlots)
